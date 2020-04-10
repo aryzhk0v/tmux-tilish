@@ -4,7 +4,7 @@
 # Project: tmux-tilish
 # Author:  Jabir Ali Ouassou <jabirali@switzerlandmail.ch>
 # Licence: MIT licence
-# 
+#
 # This file contains the `tmux` plugin `tilish`, which implements keybindings
 # that turns `tmux` into a more typical tiling window manger for your terminal.
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
@@ -14,13 +14,13 @@
 	# Get version and options.
 	options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
 	version=$(tmux select-layout -E 2>/dev/null && echo 2 || echo 1)
-	
+
 	# Set option variables.
 	for n in $options
-	do 
+	do
 		export $n
 	done
-	
+
 	# Determine "arrow types".
 	if [ -n "$easymode" ]
 	then
@@ -112,12 +112,12 @@ if [ "$(tmux show-options -g base-index)" = "base-index 1" ]
 then
 	bind_switch 'M-0' 10
 	bind_move   'M-)' 10
-else 
+else
 	bind_switch 'M-0' 0
 	bind_move   'M-)' 0
 fi
 
-# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for 
+# Switch layout with Alt + <mnemonic key>. The mnemonics are `s` and `S` for
 # layouts Vim would generate with `:split`, and `v` and `V` for `:vsplit`.
 # The remaining mappings based on `f` and `t` should be quite obvious.
 bind_layout 'M-s' 'main-horizontal'
@@ -135,12 +135,6 @@ else
 	tmux bind -n 'M-r' run-shell 'tmux select-layout'\\\; send escape
 fi
 
-# Switch to pane via Alt + hjkl.
-tmux bind -n "M-$h" select-pane -L
-tmux bind -n "M-$j" select-pane -D
-tmux bind -n "M-$k" select-pane -U
-tmux bind -n "M-$l" select-pane -R
-
 # Move a pane via Alt + Shift + hjkl.
 if [ "$version" -ge 2 ]
 then
@@ -153,19 +147,6 @@ else
 	tmux bind -n "M-$J" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -D; tmux swap-pane -t $old'
 	tmux bind -n "M-$K" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -U; tmux swap-pane -t $old'
 	tmux bind -n "M-$L" run-shell 'old=`tmux display -p "#{pane_index}"`; tmux select-pane -R; tmux swap-pane -t $old'
-fi
-
-# Open a terminal with Alt + Enter.
-if [ "$version" -ge 2 ]
-then
-	tmux bind -n 'M-enter' \
-		run-shell 'cwd="`tmux display -p \"#{pane_current_path}\"`"; tmux select-pane -t "bottom-right"; tmux split-pane -c "$cwd"'
-else
-	tmux bind -n 'M-enter' \
-		select-pane -t 'bottom-right' \\\;\
-		split-window \\\;\
-		run-shell 'tmux select-layout' \\\;\
-		send escape
 fi
 
 # Close a window with Alt + Shift + q.
@@ -196,7 +177,7 @@ then
 	# Autorefresh layout after deleting a pane.
 	tmux set-hook after-split-window "select-layout; select-layout -E"
 	tmux set-hook pane-exited "select-layout; select-layout -E"
-	
+
 	# Autoselect layout after creating new window.
 	if [ -n "$default" ]
 	then
@@ -204,25 +185,6 @@ then
 		tmux select-layout $default
 		tmux select-layout -E
 	fi
-fi
-# }}}
-
-# Integrate with `vim-tmux-navigator` {{{
-if [ -n "$navigator" ]
-then
-	# If `@tilish-navigator` is nonzero, we override the Alt + hjkl bindings.
-	# This assumes that your Vim/Neovim is setup to use Alt + hjkl as well.
-	is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-	
-	tmux bind -n "M-$h" if-shell "$is_vim" 'send M-h' 'select-pane -L'
-	tmux bind -n "M-$j" if-shell "$is_vim" 'send M-j' 'select-pane -D'
-	tmux bind -n "M-$k" if-shell "$is_vim" 'send M-k' 'select-pane -U'
-	tmux bind -n "M-$l" if-shell "$is_vim" 'send M-l' 'select-pane -R'
-	
-	tmux bind -T copy-mode-vi "M-$h" select-pane -L
-	tmux bind -T copy-mode-vi "M-$j" select-pane -D
-	tmux bind -T copy-mode-vi "M-$k" select-pane -U
-	tmux bind -T copy-mode-vi "M-$l" select-pane -R
 fi
 # }}}
 
