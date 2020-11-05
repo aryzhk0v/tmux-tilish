@@ -7,7 +7,6 @@
 # that turns `tmux` into a more typical tiling window manger for your terminal.
 # The keybindings are taken nearly directly from `i3wm` and `sway`, but with
 # minor adaptation to fit better with `vim` and `tmux`. See also the README.
-
 # Check input parameters {{{
 	# Get version and options.
 	options="$(tmux show-options -g | sed -ne 's/^@tilish-\([[:alpha:]]*\)\s\s*.\(\S*\).\s*$/\1=\2/p')"
@@ -74,6 +73,8 @@ bind_move 'M-)' 10
 # Split a window
 tmux bind '|' split-window -h
 tmux bind '\' split-window -v
+tmux bind -n 'M-|' split-window -h
+tmux bind -n 'M-\' split-window -v
 
 # Refresh the current layout (e.g. after deleting a pane).
 if [ "$version" -ge 2 ]
