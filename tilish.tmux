@@ -122,6 +122,13 @@ tmux bind-key -T copy-mode-vi 'M-l' resize-pane -R 10
 tmux bind-key -n 'M-x' confirm-before "kill-pane"
 tmux bind-key -n 'M-X' confirm-before "kill-window"
 
+# Comfy way of switching between sessions
+tmux bind-key -n 'M-s' choose-tree -s
+
+# And even comfier way of switching between sessions
+tmux bind-key -n 'M-n' switch-client -n
+tmux bind-key -n 'M-p' switch-client -p
+
 # Toggle fullscreen
 tmux bind-key -n 'M-f' resize-pane -Z
 
@@ -136,6 +143,9 @@ tmux bind -n 'M-E' \
 tmux bind -n 'M-R' \
 	source-file ~/.tmux.conf \\\;\
 	display "Reloaded config"
+# Scroll buffer with PgUp/PgDown
+bind-key -n Ppage copy-mode \; send-keys -X page-up
+bind-key -n Npage copy-mode \; send-keys -X page-down
 # }}}
 
 # Define hooks {{{
