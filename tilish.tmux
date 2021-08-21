@@ -106,17 +106,21 @@ tmux bind -n 'M-h' if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
 tmux bind -n 'M-l' if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
 tmux bind -n 'M-j' if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
 tmux bind -n 'M-k' if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
+# tmux bind -n 'M-h' "resize-pane -L 10"
+# tmux bind -n 'M-l' "resize-pane -R 10"
+# tmux bind -n 'M-j' "select-pane -t :.+"
+# tmux bind -n 'M-k' "select-pane -t :.-"
+
+tmux bind-key -T copy-mode-vi 'M-h' select-pane -L
+tmux bind-key -T copy-mode-vi 'M-j' select-pane -D
+tmux bind-key -T copy-mode-vi 'M-k' select-pane -U
+tmux bind-key -T copy-mode-vi 'M-l' select-pane -R
 
 # Resize panes
 tmux bind-key -n 'M-Left' if-shell "$is_vim" "send-keys Left"  "resize-pane -L 10"
 tmux bind-key -n 'M-Down' if-shell "$is_vim" "send-keys Down"  "resize-pane -D 5"
 tmux bind-key -n 'M-Up' if-shell "$is_vim" "send-keys Up"  "resize-pane -U 5"
 tmux bind-key -n 'M-Right' if-shell "$is_vim" "send-keys Right"  "resize-pane -R 10"
-
-tmux bind-key -T copy-mode-vi 'M-h' resize-pane -L 10
-tmux bind-key -T copy-mode-vi 'M-j' resize-pane -D 5
-tmux bind-key -T copy-mode-vi 'M-k' resize-pane -U 5
-tmux bind-key -T copy-mode-vi 'M-l' resize-pane -R 10
 
 # It's time to deal with those panes/windows!
 tmux bind-key -n 'M-x' confirm-before "kill-pane"
@@ -125,9 +129,16 @@ tmux bind-key -n 'M-X' confirm-before "kill-window"
 # Comfy way of switching between sessions
 tmux bind-key -n 'M-s' choose-tree -s
 
+# Comfy way of switching between windows
+tmux bind-key -n 'M-w' choose-tree -w
+
 # And even comfier way of switching between sessions
 tmux bind-key -n 'M-n' switch-client -n
 tmux bind-key -n 'M-p' switch-client -p
+
+tmux bind-key -n 'M-]' switch-client -n
+tmux bind-key -n 'M-[' switch-client -p
+tmux bind-key -n 'M-b' switch-client -l
 
 # Toggle fullscreen
 tmux bind-key -n 'M-f' resize-pane -Z
@@ -146,6 +157,10 @@ tmux bind -n 'M-R' \
 # Scroll buffer with PgUp/PgDown
 bind-key -n Ppage copy-mode \; send-keys -X page-up
 bind-key -n Npage copy-mode \; send-keys -X page-down
+
+# C-[ is hard to reach (
+tmux bind-key -n 'M-c' copy-mode
+tmux bind-key -n 'C-Space' copy-mode
 # }}}
 
 # Define hooks {{{
