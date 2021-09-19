@@ -71,10 +71,14 @@ bind_move 'M-(' 9
 bind_move 'M-)' 10
 
 # Split a window
-tmux bind '|' split-window -h
-tmux bind '\' split-window -v
-tmux bind -n 'M-|' split-window -h
-tmux bind -n 'M-\' split-window -v
+#tmux bind '|' split-window -h
+#tmux bind '\' split-window -v
+#tmux bind -n 'M-|' split-window -h
+#tmux bind -n 'M-\' split-window -v
+tmux bind '|' split-window -h -c '#{pane_current_path}'
+tmux bind '\' split-window -v -c '#{pane_current_path}'
+tmux bind -n 'M-|' split-window -h -c '#{pane_current_path}'
+tmux bind -n 'M-\' split-window -v -c '#{pane_current_path}'
 
 # Refresh the current layout (e.g. after deleting a pane).
 if [ "$version" -ge 2 ]
@@ -139,6 +143,9 @@ tmux bind-key -n 'M-p' switch-client -p
 tmux bind-key -n 'M-]' switch-client -n
 tmux bind-key -n 'M-[' switch-client -p
 tmux bind-key -n 'M-b' switch-client -l
+
+# Create new session
+tmux bind-key -n 'M-N' command-prompt -I "#S" "new-session -s '%%'"
 
 # Toggle fullscreen
 tmux bind-key -n 'M-f' resize-pane -Z
