@@ -2,8 +2,8 @@
 
 A plugin based on [Jabirali's tmux-tilish](https://github.com/jabirali/tmux-tilish) I modified to fit my workflow and disable features I don't really use.
 This is a plugin that makes [`tmux`][6] behave more like a typical
-[dynamic window manager][7]. It is heavily inspired by [`i3wm`][8], and 
-most keybindings are taken [directly from there][1]. 
+[dynamic window manager][7]. It is heavily inspired by [`i3wm`][8], and
+most keybindings are taken [directly from there][1].
 
 [1]: https://i3wm.org/docs/refcard.html
 [6]: https://github.com/tmux/tmux/wiki/Getting-Started
@@ -16,7 +16,7 @@ The easiest way to install this plugin is via the [Tmux Plugin Manager][2].
 Just add the following to `~/.tmux.conf`, then press <kbd>Ctrl</kbd> + <kbd>b</kbd>
 followed by <kbd>Shift</kbd> + <kbd>i</kbd> to install it (assuming default prefix key):
 
-	set -g @plugin 'alex-ryzhkov/tmux-tilish'
+	set -g @plugin 'aryzhk0v/tmux-tilish'
 
 It is also recommended that you add the following to the top of your `.tmux.conf`:
 
@@ -25,7 +25,7 @@ It is also recommended that you add the following to the top of your `.tmux.conf
 
 This plugin should work fine without these settings. However, without the first one,
 you may accidentally trigger e.g. the <kbd>Alt</kbd> + <kbd>h</kbd> binding by pressing
-<kbd>Esc</kbd> + <kbd>h</kbd>, something that can happen often if you use `vim` in `tmux`. 
+<kbd>Esc</kbd> + <kbd>h</kbd>, something that can happen often if you use `vim` in `tmux`.
 Note that this setting only has to be set manually if you don't use [tmux-sensible][4].
 The second one makes the window numbers go from 1-10 instead of 0-9, which IMO
 makes more sense on a keyboard where the number row starts at 1. This behavior
@@ -58,7 +58,7 @@ while a "pane" is what `i3wm` would call a "window" and `vim` would call a "spli
 
 The keybindings that move panes between workspaces assume a US keyboard layout.
 As far as I know, `tmux` has no way of knowing what your keyboard layout is,
-especially if you're working over `ssh`. However, if you know of a way to make 
+especially if you're working over `ssh`. However, if you know of a way to make
 this more portable without manually adding all keyboard layouts, let me know.
 
 ## Terminal compatibility
@@ -69,7 +69,7 @@ been verified to work out-of-the-box on `alacritty`, `kitty`, `urxvt`,
 it only works if you don't open any GUI tabs; if you do so, the terminal
 itself steals the <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd> keybindings. In
 `konsole` you need to disable <kbd>Alt</kbd>+<kbd>0</kbd>-<kbd>9</kbd>
-keybindings so the terminal won't steal them.  
+keybindings so the terminal won't steal them.
 If you use `xterm`, almost none of the <kbd>Alt</kbd> keys work by default.
 That can be fixed by adding the following to your `~/.Xresources`:
 

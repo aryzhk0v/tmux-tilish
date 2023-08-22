@@ -144,6 +144,10 @@ tmux bind-key -n 'M-]' switch-client -n
 tmux bind-key -n 'M-[' switch-client -p
 tmux bind-key -n 'M-b' switch-client -l
 
+# Switch to last window
+tmux bind-key -n 'M-Tab' last-window
+tmux bind-key -n 'M-/' last-window
+
 # Create new session
 tmux bind-key -n 'M-N' command-prompt -I "#S" "new-session -s '%%'"
 
